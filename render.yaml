@@ -1,5 +1,0 @@
-services:
-  - name: fastspring-integrations
-    type: web
-    runtime: static
-    staticPublishPath: .
