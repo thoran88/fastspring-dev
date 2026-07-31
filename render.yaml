@@ -1,19 +1,5 @@
 services:
   - name: fastspring-integrations
     type: web
-    runtime: node
-    rootDir: ./Fastspring-API
-    buildCommand: npm install && npm run build
-    startCommand: npm start
-    plan: free
-    envVars:
-      - key: FASTSPRING_USERNAME
-        sync: false
-      - key: FASTSPRING_PASSWORD
-        sync: false
-      - key: FASTSPRING_API_BASE
-        value: https://api.fastspring.com
-      - key: FASTSPRING_STOREFRONT
-        sync: false
-      - key: FASTSPRING_WEBHOOK_SECRET
-        sync: false
+    runtime: static
+    staticPublishPath: .

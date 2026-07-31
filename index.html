@@ -501,14 +501,6 @@
         },
       ];
 
-      function isLocalEnv() {
-        return (
-          location.protocol === "file:" ||
-          location.hostname === "localhost" ||
-          location.hostname === "127.0.0.1"
-        );
-      }
-
       function renderCard(demo) {
         if (!demo.ready) {
           var div = document.createElement("div");
@@ -526,23 +518,16 @@
           return div;
         }
 
-        // While a demo only runs locally (e.g. needs its own server process),
-        // fall back to localhost for testing; once hosted, `path` resolves
-        // correctly on its own because everything shares one domain.
-        var href = demo.checkLive && isLocalEnv() ? demo.devUrl : demo.path;
-
         var a = document.createElement("a");
         a.className = "card is-active";
-        a.href = href;
+        a.href = demo.path;
         a.target = "_blank";
         a.rel = "noopener noreferrer";
         a.id = "demo-" + demo.id;
 
         var statusSpan = document.createElement("span");
-        statusSpan.className = demo.checkLive
-          ? "status checking"
-          : "status ready";
-        statusSpan.textContent = demo.checkLive ? "Checking…" : "Ready";
+        statusSpan.className = "status ready";
+        statusSpan.textContent = "Ready";
 
         a.innerHTML =
           '<div class="card-top">' +
@@ -560,25 +545,7 @@
 
         a.querySelector(".card-top").appendChild(statusSpan);
 
-        if (demo.checkLive) checkLiveStatus(a, statusSpan, href);
-
         return a;
-      }
-
-      function checkLiveStatus(cardEl, statusEl, href) {
-        fetch(href, { mode: "no-cors", cache: "no-store" })
-          .then(function () {
-            statusEl.textContent = "Live";
-            statusEl.className = "status ready";
-          })
-          .catch(function () {
-            statusEl.textContent = "Offline";
-            statusEl.className = "status setup";
-            cardEl.classList.remove("is-active");
-            cardEl.classList.add("is-disabled");
-            cardEl.removeAttribute("href");
-            cardEl.removeAttribute("target");
-          });
       }
 
       (function () {
