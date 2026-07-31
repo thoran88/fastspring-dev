@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>FastSpring Demos</title>
+<script>
+  (function () {
+    var stored = localStorage.getItem("theme");
+    var theme = stored || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", theme);
+  })();
+</script>
+<style>
+  :root {
+    --bg: #f7f8fa;
+    --surface: #ffffff;
+    --border: #e2e5ea;
+    --text: #1a1d24;
+    --text-muted: #5c6370;
+    --text-faint: #9096a2;
+    --accent: #4338ca;
+    --accent-hover: #362ea3;
+    --accent-soft: #eef0fd;
+    --success: #0f9d58;
+    --success-soft: #e6f6ec;
+    --warn: #b45309;
+    --warn-soft: #fdf1e0;
+    --neutral-soft: #eef0f3;
+    --shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+    --shadow-md: 0 4px 12px rgba(16, 24, 40, 0.06);
+    --radius: 10px;
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #0f1115;
+    --surface: #171a21;
+    --border: #2a2e38;
+    --text: #e6e8eb;
+    --text-muted: #9aa1ad;
+    --text-faint: #6b7280;
+    --accent: #818cf8;
+    --accent-hover: #a5b0fb;
+    --accent-soft: #1e2036;
+    --success: #34d399;
+    --success-soft: #103224;
+    --warn: #fbbf24;
+    --warn-soft: #362b10;
+    --neutral-soft: #1f232c;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; }
+
+  header {
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .header-inner {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 28px 24px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .brand-mark {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    background: var(--accent);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  .title-block { display: flex; gap: 12px; align-items: center; }
+
+  h1 {
+    font-size: 18px;
+    font-weight: 650;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  .subtitle {
+    margin: 3px 0 0;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .env-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: var(--warn-soft);
+    color: var(--warn);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .header-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  .theme-toggle {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+  .theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .theme-toggle svg { width: 16px; height: 16px; }
+  .theme-toggle .icon-sun { display: none; }
+  .theme-toggle .icon-moon { display: none; }
+  :root[data-theme="light"] .theme-toggle .icon-moon { display: block; }
+  :root[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+
+  main {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 32px 24px 64px;
+  }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 650;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin: 0 0 12px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px;
+    margin-bottom: 36px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: var(--shadow);
+    text-decoration: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+  }
+
+  .card * { text-decoration: none; }
+
+  .card.is-active {
+    cursor: pointer;
+  }
+
+  .card.is-active:hover {
+    border-color: var(--accent);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+  }
+
+  .card.is-active:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .card.is-disabled {
+    opacity: 0.6;
+  }
+
+  .card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .card-title {
+    font-size: 14.5px;
+    font-weight: 600;
+    margin: 0;
+    text-decoration: none;
+  }
+
+  .card.is-active .card-title { color: var(--accent); }
+
+  .card-desc {
+    margin: 0;
+    font-size: 13px;
+    color: var(--text-muted);
+    flex-grow: 1;
+  }
+
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11.5px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .status::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  .status.ready { background: var(--success-soft); color: var(--success); }
+  .status.setup { background: var(--warn-soft); color: var(--warn); }
+  .status.planned { background: var(--neutral-soft); color: var(--text-faint); }
+  .status.checking { background: var(--neutral-soft); color: var(--text-faint); }
+  .status.checking::before { animation: pulse 1.2s ease-in-out infinite; }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .card-meta {
+    font-size: 12px;
+    color: var(--text-faint);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .card-meta code {
+    background: var(--neutral-soft);
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 11.5px;
+  }
+
+  .card-action {
+    margin-top: auto;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .card.is-disabled .card-action { color: var(--text-faint); }
+
+  footer {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 24px 40px;
+    font-size: 12.5px;
+    color: var(--text-faint);
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  footer a { color: var(--text-muted); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="title-block">
+      <div class="brand-mark" aria-hidden="true">FS</div>
+      <div>
+        <h1>FastSpring Integration Demos</h1>
+        <p class="subtitle">Local reference implementations against a FastSpring test store</p>
+      </div>
+    </div>
+    <div class="header-controls">
+      <!-- <span class="env-badge">Sandbox &middot; No real charges</span> -->
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle color theme">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <p class="section-label">Available</p>
+  <div class="grid" id="available-grid"></div>
+
+  <p class="section-label">Planned</p>
+  <div class="grid" id="planned-grid"></div>
+</main>
+
+<footer>
+  <span>FastSpring is merchant of record &mdash; no card data touches these demos directly.</span>
+  <a href="https://developer.fastspring.com/" target="_blank" rel="noopener noreferrer">API docs &#8599;</a>
+</footer>
+
+<script>
+  (function () {
+    var btn = document.getElementById("theme-toggle");
+    if (!btn) return;
+    btn.addEventListener("click", function () {
+      var current = document.documentElement.getAttribute("data-theme");
+      var next = current === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      localStorage.setItem("theme", next);
+    });
+  })();
+
+  // Single source of truth for every demo page. `path` is relative to this
+  // file and assumes every demo ends up served from the same domain -
+  // update it here once a demo actually goes live, nowhere else.
+  var DEMOS = [
+    {
+      id: "embedded-checkout",
+      title: "Embedded Checkout",
+      description: "Store Builder Library checkout embedded inline in the page.",
+      path: "EmbeddedCheckouts/index.html",
+      ready: true
+    },
+    {
+      id: "api-webhooks",
+      title: "API + Webhooks",
+      description: "Express backend that creates checkout sessions via the FastSpring REST API and verifies incoming webhooks.",
+      path: "Fastspring-API/",
+      devUrl: "http://localhost:3000",
+      checkLive: true,
+      meta: "cd Fastspring-API && npm run dev",
+      ready: true
+    },
+    {
+      id: "popup-checkout",
+      title: "Popup Checkout",
+      description: "FastSpring hosted checkout opened as an overlay popup via the Store Builder Library.",
+      path: "PopupCheckouts/index.html",
+      ready: true
+    },
+    {
+      id: "payment-components",
+      title: "Payment Components",
+      description: "Individually embeddable payment fields for a fully custom checkout UI.",
+      ready: false
+    },
+    {
+      id: "sbl",
+      title: "Store Builder Library",
+      description: "Reference notes and snippets for the underlying fastspring-builder.js library.",
+      ready: false
+    },
+    {
+      id: "web-checkout",
+      title: "Web Checkout",
+      description: "AI License sales page — hosted checkout redirect flow.",
+      path: "WebCheckouts/index.html",
+      ready: true
+    }
+  ];
+
+  function isLocalEnv() {
+    return location.protocol === "file:" ||
+      location.hostname === "localhost" ||
+      location.hostname === "127.0.0.1";
+  }
+
+  function renderCard(demo) {
+    if (!demo.ready) {
+      var div = document.createElement("div");
+      div.className = "card is-disabled";
+      div.innerHTML =
+        '<div class="card-top">' +
+          '<p class="card-title">' + demo.title + '</p>' +
+          '<span class="status planned">Planned</span>' +
+        '</div>' +
+        '<p class="card-desc">' + demo.description + '</p>';
+      return div;
+    }
+
+    // While a demo only runs locally (e.g. needs its own server process),
+    // fall back to localhost for testing; once hosted, `path` resolves
+    // correctly on its own because everything shares one domain.
+    var href = (demo.checkLive && isLocalEnv()) ? demo.devUrl : demo.path;
+
+    var a = document.createElement("a");
+    a.className = "card is-active";
+    a.href = href;
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    a.id = "demo-" + demo.id;
+
+    var statusSpan = document.createElement("span");
+    statusSpan.className = demo.checkLive ? "status checking" : "status ready";
+    statusSpan.textContent = demo.checkLive ? "Checking…" : "Ready";
+
+    a.innerHTML =
+      '<div class="card-top">' +
+        '<p class="card-title">' + demo.title + '</p>' +
+      '</div>' +
+      '<p class="card-desc">' + demo.description + '</p>' +
+      (demo.meta ? '<div class="card-meta"><code>' + demo.meta + '</code></div>' : '') +
+      '<div class="card-action">Open demo &rarr;</div>';
+
+    a.querySelector(".card-top").appendChild(statusSpan);
+
+    if (demo.checkLive) checkLiveStatus(a, statusSpan, href);
+
+    return a;
+  }
+
+  function checkLiveStatus(cardEl, statusEl, href) {
+    fetch(href, { mode: "no-cors", cache: "no-store" })
+      .then(function () {
+        statusEl.textContent = "Live";
+        statusEl.className = "status ready";
+      })
+      .catch(function () {
+        statusEl.textContent = "Offline";
+        statusEl.className = "status setup";
+        cardEl.classList.remove("is-active");
+        cardEl.classList.add("is-disabled");
+        cardEl.removeAttribute("href");
+        cardEl.removeAttribute("target");
+      });
+  }
+
+  (function () {
+    var availableGrid = document.getElementById("available-grid");
+    var plannedGrid = document.getElementById("planned-grid");
+
+    DEMOS.forEach(function (demo) {
+      var card = renderCard(demo);
+      (demo.ready ? availableGrid : plannedGrid).appendChild(card);
+    });
+  })();
+</script>
+
+</body>
+</html>

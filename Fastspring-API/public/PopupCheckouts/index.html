@@ -1,0 +1,685 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Item Shop &mdash; Popup Checkout Demo</title>
+    <style>
+      :root {
+        --bg: #0a0e17;
+        --bg-2: #0e1320;
+        --surface: #131a29;
+        --border: #232c40;
+        --text: #eef1f8;
+        --text-muted: #8b93a8;
+        --text-faint: #5b6377;
+        --success: #34d399;
+        --success-soft: #103224;
+        --credit: #ffd54a;
+        --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.45);
+        --radius: 14px;
+
+        --c-common: #9aa3b2;
+        --c-uncommon: #3ecf6e;
+        --c-rare: #3b9dff;
+        --c-very-rare: #b168ff;
+        --c-import: #ffb020;
+        --c-exotic: #22e0d0;
+        --c-black-market: #ff3d6e;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font:
+          15px/1.55 -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Roboto,
+          Helvetica,
+          Arial,
+          sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      /* ---------- top bar ---------- */
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 24px;
+        border-bottom: 1px solid var(--border);
+        background: var(--bg-2);
+      }
+
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 13.5px;
+        font-weight: 600;
+        color: var(--text-muted);
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: var(--text);
+      }
+      .back-link svg {
+        width: 14px;
+        height: 14px;
+      }
+
+      .env-badge {
+        font-size: 11.5px;
+        font-weight: 700;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        padding: 5px 10px;
+        border-radius: 999px;
+        background: var(--success-soft);
+        color: var(--success);
+        white-space: nowrap;
+      }
+
+      /* ---------- hero ---------- */
+      .hero {
+        position: relative;
+        overflow: hidden;
+        padding: 36px 24px 30px;
+        background:
+          radial-gradient(
+            ellipse 900px 260px at 15% -20%,
+            rgba(59, 157, 255, 0.25),
+            transparent
+          ),
+          radial-gradient(
+            ellipse 900px 260px at 85% -20%,
+            rgba(255, 61, 110, 0.2),
+            transparent
+          ),
+          var(--bg-2);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .hero-inner {
+        max-width: 1180px;
+        margin: 0 auto;
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+
+      .shop-title {
+        font-size: 34px;
+        font-weight: 900;
+        letter-spacing: -0.02em;
+        margin: 0;
+        text-transform: uppercase;
+        background: linear-gradient(90deg, #3b9dff, #b168ff 60%, #ff3d6e);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .shop-subtitle {
+        margin: 4px 0 0;
+        font-size: 13.5px;
+        color: var(--text-muted);
+      }
+
+      .reset-timer {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 3px;
+      }
+
+      .reset-label {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--text-faint);
+      }
+
+      .reset-clock {
+        font-size: 20px;
+        font-weight: 800;
+        font-variant-numeric: tabular-nums;
+        color: var(--text);
+      }
+
+      .wallet {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 14px;
+        font-weight: 800;
+        color: var(--credit);
+        background: rgba(255, 213, 74, 0.1);
+        border: 1px solid rgba(255, 213, 74, 0.3);
+        padding: 6px 12px;
+        border-radius: 999px;
+        margin-top: 8px;
+      }
+
+      /* ---------- layout ---------- */
+      main {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 32px 24px 80px;
+      }
+
+      .section-label {
+        font-size: 12.5px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--text-faint);
+        margin: 0 0 16px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .section-label::after {
+        content: "";
+        flex-grow: 1;
+        height: 1px;
+        background: var(--border);
+      }
+
+      /* ---------- featured ---------- */
+      .featured {
+        margin-bottom: 44px;
+      }
+
+      .featured-card {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr 1.2fr;
+        gap: 0;
+        background: var(--surface);
+        border-radius: var(--radius);
+        overflow: hidden;
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow-md);
+      }
+
+      @media (max-width: 760px) {
+        .featured-card {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .featured-art {
+        position: relative;
+        min-height: 240px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 96px;
+        background:
+          repeating-linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.06) 0px,
+            rgba(255, 255, 255, 0.06) 2px,
+            transparent 2px,
+            transparent 14px
+          ),
+          linear-gradient(135deg, #ff3d6e, #ff8a3d 45%, #ffd54a 90%);
+        background-size:
+          200% 200%,
+          100% 100%;
+        animation: shimmer 5s linear infinite;
+      }
+
+      @keyframes shimmer {
+        0% {
+          background-position:
+            0% 0%,
+            0 0;
+        }
+        100% {
+          background-position:
+            200% 200%,
+            0 0;
+        }
+      }
+
+      .featured-body {
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .new-badge {
+        align-self: flex-start;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        padding: 4px 10px;
+        border-radius: 5px;
+        background: var(--c-black-market);
+        color: #fff;
+      }
+
+      .featured-category {
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--c-black-market);
+      }
+
+      .featured-title {
+        font-size: 26px;
+        font-weight: 800;
+        margin: 0;
+      }
+
+      .featured-desc {
+        font-size: 13.5px;
+        color: var(--text-muted);
+        margin: 0;
+        max-width: 46ch;
+      }
+
+      .featured-footer {
+        margin-top: auto;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding-top: 12px;
+      }
+
+      /* ---------- grid ---------- */
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 18px;
+      }
+
+      .item-card {
+        position: relative;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: var(--shadow-md);
+        display: flex;
+        flex-direction: column;
+        transition:
+          transform 0.15s ease,
+          box-shadow 0.15s ease;
+      }
+
+      .item-card:hover {
+        transform: translateY(-3px);
+      }
+
+      .item-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: var(--rarity-color);
+      }
+
+      .item-art {
+        height: 130px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 42px;
+        position: relative;
+        background: linear-gradient(
+          160deg,
+          color-mix(in srgb, var(--rarity-color) 35%, var(--bg-2)),
+          var(--bg-2)
+        );
+      }
+
+      .item-rarity {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        padding: 3px 8px;
+        border-radius: 999px;
+        background: var(--rarity-color);
+        color: #06070c;
+      }
+
+      .item-category {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 9.5px;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        padding: 3px 7px;
+        border-radius: 999px;
+        background: rgba(0, 0, 0, 0.4);
+        color: var(--text-muted);
+      }
+
+      .item-body {
+        padding: 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        flex-grow: 1;
+      }
+
+      .item-title {
+        font-size: 14.5px;
+        font-weight: 700;
+        margin: 0;
+      }
+
+      .item-desc {
+        font-size: 12px;
+        color: var(--text-muted);
+        margin: 0;
+        min-height: 30px;
+      }
+
+      .item-price {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 14px;
+        font-weight: 800;
+        color: var(--credit);
+        margin: 4px 0 10px;
+      }
+
+      .item-price::before {
+        content: "\25C6";
+        font-size: 12px;
+      }
+
+      .buy-btn {
+        margin-top: auto;
+        font-size: 12.5px;
+        font-weight: 800;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        padding: 10px 14px;
+        border: 1px solid var(--rarity-color);
+        border-radius: 8px;
+        background: transparent;
+        color: var(--text);
+        cursor: pointer;
+      }
+      .buy-btn:hover {
+        background: var(--rarity-color);
+        color: #06070c;
+      }
+
+      .featured-buy {
+        font-size: 13.5px;
+        font-weight: 800;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        padding: 12px 22px;
+        border: none;
+        border-radius: 8px;
+        background: var(--c-black-market);
+        color: #fff;
+        cursor: pointer;
+      }
+      .featured-buy:hover {
+        opacity: 0.9;
+      }
+
+      .featured-price {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 18px;
+        font-weight: 800;
+        color: var(--credit);
+      }
+      .featured-price::before {
+        content: "\25C6";
+        font-size: 15px;
+      }
+
+      .disclaimer {
+        margin-top: 36px;
+        font-size: 12px;
+        color: var(--text-faint);
+      }
+
+      .disclaimer code {
+        background: rgba(255, 255, 255, 0.06);
+        padding: 1px 5px;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="topbar">
+      <a class="back-link" href="../index.html">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+        All demos
+      </a>
+    </div>
+
+    <main>
+      <div class="featured">
+        <p class="section-label">Featured</p>
+        <div class="featured-card">
+          <div class="featured-art">&#129415;</div>
+          <div class="featured-body">
+            <span class="new-badge">Limited Edition</span>
+            <span
+              class="featured-category"
+              data-fsc-item-description-summary
+              data-fsc-item-path="batmobile"
+            ></span>
+            <h2
+              class="featured-title"
+              data-fsc-item-path="batmobile"
+              data-fsc-item-display
+            ></h2>
+            <p
+              class="featured-desc"
+              data-fsc-item-path="batmobile"
+              data-fsc-item-description-full
+            ></p>
+            <div class="featured-footer">
+              <span
+                class="featured-price"
+                data-fsc-item-path="batmobile"
+                data-fsc-item-price
+              ></span>
+              <button
+                class="featured-buy"
+                data-fsc-item-path-value="batmobile"
+                data-fsc-action="Add, Checkout"
+              >
+                Buy Now
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p class="section-label">Fennec &amp; Fennec Decals</p>
+      <div class="grid">
+        <div class="item-card" style="--rarity-color: var(--c-import)">
+          <div class="item-art">
+            <span class="item-rarity">Import</span>
+            <span class="item-category">Battle-Car</span>
+            &#128664;
+          </div>
+          <div class="item-body">
+            <p
+              class="item-title"
+              data-fsc-item-path="fennec"
+              data-fsc-item-display
+            ></p>
+            <p
+              class="featured-desc"
+              data-fsc-item-path="fennec"
+              data-fsc-item-description-full
+            ></p>
+            <p
+              class="item-price"
+              data-fsc-item-path="fennec"
+              data-fsc-item-price
+            ></p>
+            <button
+              class="buy-btn"
+              data-fsc-item-path-value="fennec"
+              data-fsc-action="Add, Checkout"
+            >
+              Buy Now
+            </button>
+          </div>
+        </div>
+
+        <div class="item-card" style="--rarity-color: var(--c-very-rare)">
+          <div class="item-art">
+            <span class="item-rarity">Very Rare</span>
+            <span class="item-category">Fennec Decal</span>
+            &#127912;
+          </div>
+          <div class="item-body">
+            <p
+              class="item-title"
+              data-fsc-item-path="distortion"
+              data-fsc-item-display
+            ></p>
+            <p
+              class="featured-desc"
+              data-fsc-item-path="distortion"
+              data-fsc-item-description-full
+            ></p>
+            <p
+              class="item-price"
+              data-fsc-item-path="distortion"
+              data-fsc-item-price
+            ></p>
+            <button
+              class="buy-btn"
+              data-fsc-item-path-value="distortion"
+              data-fsc-action="Add, Checkout"
+            >
+              Buy Now
+            </button>
+          </div>
+        </div>
+
+        <div class="item-card" style="--rarity-color: var(--c-rare)">
+          <div class="item-art">
+            <span class="item-rarity">Rare</span>
+            <span class="item-category">Fennec Decal</span>
+            &#127993;&#65039;
+          </div>
+          <div class="item-body">
+            <p
+              class="item-title"
+              data-fsc-item-path="huntress"
+              data-fsc-item-display
+            ></p>
+            <p
+              class="featured-desc"
+              data-fsc-item-path="huntress"
+              data-fsc-item-description-full
+            ></p>
+            <p
+              class="item-price"
+              data-fsc-item-path="huntress"
+              data-fsc-item-price
+            ></p>
+            <button
+              class="buy-btn"
+              data-fsc-item-path-value="huntress"
+              data-fsc-action="Add, Checkout"
+            >
+              Buy Now
+            </button>
+          </div>
+        </div>
+
+        <div class="item-card" style="--rarity-color: var(--c-import)">
+          <div class="item-art">
+            <span class="item-rarity">Import</span>
+            <span class="item-category">Fennec Decal</span>
+            &#127755;
+          </div>
+          <div class="item-body">
+            <p
+              class="item-title"
+              data-fsc-item-path="magma"
+              data-fsc-item-display
+            ></p>
+            <p
+              class="featured-desc"
+              data-fsc-item-path="magma"
+              data-fsc-item-description-full
+            ></p>
+            <p
+              class="item-price"
+              data-fsc-item-path="magma"
+              data-fsc-item-price
+            ></p>
+            <button
+              class="buy-btn"
+              data-fsc-item-path-value="magma"
+              data-fsc-action="Add, Checkout"
+            >
+              Buy Now
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <p class="disclaimer">
+        Product paths above (<code>batmobile</code>, <code>fennec</code>, etc.)
+        are placeholders &mdash; swap them for the real product paths configured
+        in the <code>popup-maps</code> storefront. The credit balance in the
+        header is decorative and not wired to a real wallet.
+      </p>
+    </main>
+
+    <script
+      id="fsc-api"
+      src="https://d1f8f9xcsvx3ha.cloudfront.net/sbl/TNP-27957/fastspring-builder.js"
+      type="text/javascript"
+      data-storefront="thoran.test.qa.onfastspring.com/popup-rocket-league"
+    ></script>
+  </body>
+</html>
