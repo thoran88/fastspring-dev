@@ -230,6 +230,7 @@
         align-items: center;
         justify-content: center;
         font-size: 96px;
+        overflow: hidden;
         background:
           repeating-linear-gradient(
             135deg,
@@ -348,11 +349,20 @@
         justify-content: center;
         font-size: 42px;
         position: relative;
+        overflow: hidden;
         background: linear-gradient(
           160deg,
           color-mix(in srgb, var(--rarity-color) 35%, var(--bg-2)),
           var(--bg-2)
         );
+      }
+
+      .product-img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
       }
 
       .item-rarity {
@@ -500,7 +510,14 @@
       <div class="featured">
         <p class="section-label">Featured</p>
         <div class="featured-card">
-          <div class="featured-art">&#129415;</div>
+          <div class="featured-art">
+            <img
+              class="product-img"
+              data-fsc-item-path="batmobile"
+              data-fsc-item-image
+            />
+            &#129415;
+          </div>
           <div class="featured-body">
             <span class="new-badge">Limited Edition</span>
             <span
@@ -540,6 +557,11 @@
       <div class="grid">
         <div class="item-card" style="--rarity-color: var(--c-import)">
           <div class="item-art">
+            <img
+              class="product-img"
+              data-fsc-item-path="fennec"
+              data-fsc-item-image
+            />
             <span class="item-rarity">Import</span>
             <span class="item-category">Battle-Car</span>
             &#128664;
@@ -572,6 +594,11 @@
 
         <div class="item-card" style="--rarity-color: var(--c-very-rare)">
           <div class="item-art">
+            <img
+              class="product-img"
+              data-fsc-item-path="distortion"
+              data-fsc-item-image
+            />
             <span class="item-rarity">Very Rare</span>
             <span class="item-category">Fennec Decal</span>
             &#127912;
@@ -604,6 +631,11 @@
 
         <div class="item-card" style="--rarity-color: var(--c-rare)">
           <div class="item-art">
+            <img
+              class="product-img"
+              data-fsc-item-path="huntress"
+              data-fsc-item-image
+            />
             <span class="item-rarity">Rare</span>
             <span class="item-category">Fennec Decal</span>
             &#127993;&#65039;
@@ -636,6 +668,11 @@
 
         <div class="item-card" style="--rarity-color: var(--c-import)">
           <div class="item-art">
+            <img
+              class="product-img"
+              data-fsc-item-path="magma"
+              data-fsc-item-image
+            />
             <span class="item-rarity">Import</span>
             <span class="item-category">Fennec Decal</span>
             &#127755;
