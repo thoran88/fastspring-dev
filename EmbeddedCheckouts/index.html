@@ -361,6 +361,46 @@
         opacity: 0.9;
       }
 
+      .quiz-question {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--text);
+        margin: 0;
+      }
+
+      .quiz-options {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      .quiz-btn {
+        font-size: 13px;
+        font-weight: 600;
+        padding: 9px 16px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: var(--surface-2);
+        color: var(--text);
+        cursor: pointer;
+      }
+      .quiz-btn:hover {
+        border-color: var(--accent-solid);
+        color: var(--accent-solid);
+      }
+      .quiz-btn.is-wrong {
+        border-color: var(--accent-2);
+        color: var(--accent-2);
+      }
+
+      .quiz-feedback {
+        min-height: 16px;
+        font-size: 12.5px;
+        color: var(--accent-2);
+        margin: 0;
+      }
+
       .spinner {
         width: 22px;
         height: 22px;
@@ -532,9 +572,17 @@
 
           <div id="fsc-embedded-checkout-container">
             <div class="payment-placeholder" id="payment-placeholder">
-              <button id="proceed-btn" class="proceed-btn">
-                Click Here to Proceed to Payment
-              </button>
+              <p class="quiz-question">
+                Get this question right to proceed to payment: who is the
+                protagonist of the Odyssey?
+              </p>
+              <div class="quiz-options" id="quiz-options">
+                <button class="quiz-btn" data-correct="false">Achilles</button>
+                <button class="quiz-btn" data-correct="true">Odysseus</button>
+                <button class="quiz-btn" data-correct="false">Hector</button>
+                <button class="quiz-btn" data-correct="false">Agamemnon</button>
+              </div>
+              <p class="quiz-feedback" id="quiz-feedback"></p>
             </div>
           </div>
         </div>
@@ -561,9 +609,20 @@
       })();
 
       (function () {
-        var proceedBtn = document.getElementById("proceed-btn");
-        if (!proceedBtn) return;
-        proceedBtn.addEventListener("click", function () {
+        var options = document.getElementById("quiz-options");
+        if (!options) return;
+        var feedback = document.getElementById("quiz-feedback");
+
+        options.addEventListener("click", function (event) {
+          var btn = event.target.closest(".quiz-btn");
+          if (!btn) return;
+
+          if (btn.dataset.correct !== "true") {
+            btn.classList.add("is-wrong");
+            feedback.textContent = "Not quite — try again.";
+            return;
+          }
+
           document.getElementById("payment-placeholder").innerHTML =
             '<div class="spinner"></div><span>Loading secure payment form&hellip;</span>';
           fastspring.builder.add("odyssey");
