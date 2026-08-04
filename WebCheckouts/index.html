@@ -617,7 +617,11 @@
   <body>
     <div class="sticky-bar" id="sticky-bar">
       <div class="sticky-bar-inner">
-        <span class="sticky-bar-title">AI License &mdash; $50 one-time</span>
+        <span class="sticky-bar-title"
+          >AI License &mdash;
+          <span data-fsc-item-path="license" data-fsc-item-price></span>
+          one-time</span
+        >
         <a
           class="sticky-cta"
           href="https://thoran.test.qa.onfastspring.com/license"
@@ -703,8 +707,12 @@
 
         <div class="price-card">
           <div class="price-row">
-            <span class="price-amount">$50</span>
-            <span class="price-unit">USD &middot; one-time</span>
+            <span
+              class="price-amount"
+              data-fsc-item-path="license"
+              data-fsc-item-price
+            ></span>
+            <span class="price-unit">one-time</span>
           </div>
           <div style="display: flex; justify-content: center">
             <span class="save-badge">
@@ -828,5 +836,15 @@
         observer.observe(hero);
       })();
     </script>
+
+    <!-- SBL loaded for display directives only (live price/currency) -->
+    <!-- the actual purchase flow stays a plain hosted-checkout link, unlike
+         the Embedded/Popup demos which drive checkout via this same script -->
+    <script
+      id="fsc-api"
+      src="https://d1f8f9xcsvx3ha.cloudfront.net/sbl/TNP-27957/fastspring-builder.js"
+      type="text/javascript"
+      data-storefront="thoran.test.qa.onfastspring.com"
+    ></script>
   </body>
 </html>
