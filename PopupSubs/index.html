@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Newsletter &mdash; Popup Checkout Demo</title>
+    <style>
+      :root {
+        --bg: #0a0e17;
+        --bg-2: #0e1320;
+        --surface: #131a29;
+        --border: #232c40;
+        --text: #eef1f8;
+        --text-muted: #8b93a8;
+        --text-faint: #5b6377;
+        --success: #34d399;
+        --success-soft: #103224;
+        --accent: #3b9dff;
+        --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.45);
+        --radius: 14px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font:
+          15px/1.55 -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Roboto,
+          Helvetica,
+          Arial,
+          sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      /* ---------- top bar ---------- */
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 24px;
+        border-bottom: 1px solid var(--border);
+        background: var(--bg-2);
+      }
+
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 13.5px;
+        font-weight: 600;
+        color: var(--text-muted);
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: var(--text);
+      }
+      .back-link svg {
+        width: 14px;
+        height: 14px;
+      }
+
+      .env-badge {
+        font-size: 11.5px;
+        font-weight: 700;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        padding: 5px 10px;
+        border-radius: 999px;
+        background: var(--success-soft);
+        color: var(--success);
+        white-space: nowrap;
+      }
+
+      /* ---------- hero ---------- */
+      .hero {
+        position: relative;
+        overflow: hidden;
+        padding: 44px 24px 36px;
+        text-align: center;
+        background:
+          radial-gradient(
+            ellipse 900px 260px at 50% -20%,
+            rgba(59, 157, 255, 0.25),
+            transparent
+          ),
+          var(--bg-2);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .shop-title {
+        font-size: 32px;
+        font-weight: 900;
+        letter-spacing: -0.02em;
+        margin: 0;
+      }
+
+      .shop-subtitle {
+        margin: 8px auto 0;
+        max-width: 46ch;
+        font-size: 14px;
+        color: var(--text-muted);
+      }
+
+      /* ---------- layout ---------- */
+      main {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 40px 24px 80px;
+      }
+
+      .tiers {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        align-items: stretch;
+      }
+
+      @media (max-width: 760px) {
+        .tiers {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .tier-card {
+        position: relative;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow-md);
+        padding: 26px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .tier-card.is-live {
+        border-color: var(--accent);
+      }
+
+      .tier-card.is-soon {
+        opacity: 0.7;
+      }
+
+      .tier-loading {
+        display: none;
+        position: absolute;
+        inset: 0;
+        background: var(--surface);
+        border-radius: var(--radius);
+        align-items: center;
+        justify-content: center;
+        z-index: 2;
+      }
+
+      .tier-card.is-loading .tier-loading {
+        display: flex;
+      }
+
+      .tier-card.is-loading .tier-badge,
+      .tier-card.is-loading .tier-name,
+      .tier-card.is-loading .tier-price,
+      .tier-card.is-loading .tier-desc,
+      .tier-card.is-loading .tier-features,
+      .tier-card.is-loading .tier-btn {
+        visibility: hidden;
+      }
+
+      .tier-spinner {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        border: 2.5px solid var(--border);
+        border-top-color: var(--accent);
+        animation: tier-spin 0.8s linear infinite;
+      }
+
+      @keyframes tier-spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .tier-badge {
+        align-self: flex-start;
+        font-size: 10.5px;
+        font-weight: 800;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        padding: 3px 9px;
+        border-radius: 999px;
+        background: rgba(59, 157, 255, 0.15);
+        color: var(--accent);
+      }
+
+      .tier-card.is-soon .tier-badge {
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--text-faint);
+      }
+
+      .tier-name {
+        font-size: 20px;
+        font-weight: 800;
+        margin: 0;
+      }
+
+      .tier-price {
+        font-size: 28px;
+        font-weight: 800;
+        color: var(--text);
+        min-height: 34px;
+      }
+
+      .tier-price .unit {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--text-faint);
+      }
+
+      .tier-price .then {
+        display: block;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--text-faint);
+        margin-top: 2px;
+      }
+
+      .tier-desc {
+        font-size: 13px;
+        color: var(--text-muted);
+        margin: 0;
+        min-height: 34px;
+      }
+
+      .tier-features {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        font-size: 13px;
+        color: var(--text-muted);
+        flex-grow: 1;
+      }
+
+      .tier-features li {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+      }
+
+      .tier-features li::before {
+        content: "\2713";
+        color: var(--accent);
+        font-weight: 700;
+      }
+
+      .tier-card.is-soon .tier-features li::before {
+        color: var(--text-faint);
+      }
+
+      .tier-btn {
+        margin-top: auto;
+        font-size: 13.5px;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+        padding: 11px 16px;
+        border-radius: 8px;
+        border: 1px solid var(--accent);
+        background: var(--accent);
+        color: #06070c;
+        cursor: pointer;
+      }
+      .tier-btn:hover {
+        opacity: 0.9;
+      }
+
+      .tier-btn:disabled {
+        border-color: var(--border);
+        background: transparent;
+        color: var(--text-faint);
+        cursor: default;
+      }
+
+      .disclaimer {
+        margin-top: 36px;
+        font-size: 12px;
+        color: var(--text-faint);
+        text-align: center;
+      }
+
+      .disclaimer code {
+        background: rgba(255, 255, 255, 0.06);
+        padding: 1px 5px;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="topbar">
+      <a class="back-link" href="../index.html">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+        All demos
+      </a>
+      <span class="env-badge">Sandbox &middot; No real charges</span>
+    </div>
+
+    <div class="hero">
+      <h1 class="shop-title">Newsletter Subscription</h1>
+      <p class="shop-subtitle">
+        Pick a plan &mdash; recurring subscription checkout opened as a popup
+        via the Store Builder Library.
+      </p>
+    </div>
+
+    <main>
+      <div class="tiers">
+        <!-- Basic: real product, live -->
+        <div class="tier-card is-live is-loading" data-tier-path="basic-newsletter">
+          <div class="tier-loading"><div class="tier-spinner"></div></div>
+          <span class="tier-badge">Live</span>
+          <h2
+            class="tier-name"
+            data-fsc-item-path="basic-newsletter"
+            data-fsc-item-display
+          ></h2>
+          <div class="tier-price" id="tier-price-basic-newsletter"></div>
+          <p
+            class="tier-desc"
+            data-fsc-item-path="basic-newsletter"
+            data-fsc-item-description-summary
+          ></p>
+          <ul class="tier-features">
+            <li>Weekly digest email</li>
+            <li>Product update announcements</li>
+          </ul>
+          <button
+            class="tier-btn"
+            data-fsc-item-path-value="basic-newsletter"
+            data-fsc-action="Add, Checkout"
+          >
+            Subscribe
+          </button>
+        </div>
+
+        <div class="tier-card is-live is-loading" data-tier-path="premium-newsletter">
+          <div class="tier-loading"><div class="tier-spinner"></div></div>
+          <span class="tier-badge">Live</span>
+          <h2
+            class="tier-name"
+            data-fsc-item-path="premium-newsletter"
+            data-fsc-item-display
+          ></h2>
+          <div class="tier-price" id="tier-price-premium-newsletter"></div>
+          <p
+            class="tier-desc"
+            data-fsc-item-path="premium-newsletter"
+            data-fsc-item-description-summary
+          ></p>
+          <ul class="tier-features">
+            <li>Weekly digest email</li>
+            <li>Product update announcements</li>
+          </ul>
+          <button
+            class="tier-btn"
+            data-fsc-item-path-value="premium-newsletter"
+            data-fsc-action="Add, Checkout"
+          >
+            Subscribe
+          </button>
+        </div>
+
+        <div class="tier-card is-live is-loading" data-tier-path="ultra-newsletter">
+          <div class="tier-loading"><div class="tier-spinner"></div></div>
+          <span class="tier-badge">Live</span>
+          <h2
+            class="tier-name"
+            data-fsc-item-path="ultra-newsletter"
+            data-fsc-item-display
+          ></h2>
+          <div class="tier-price" id="tier-price-ultra-newsletter"></div>
+          <p
+            class="tier-desc"
+            data-fsc-item-path="ultra-newsletter"
+            data-fsc-item-description-summary
+          ></p>
+          <ul class="tier-features">
+            <li>Weekly digest email</li>
+            <li>Product update announcements</li>
+          </ul>
+          <button
+            class="tier-btn"
+            data-fsc-item-path-value="ultra-newsletter"
+            data-fsc-action="Add, Checkout"
+          >
+            Subscribe
+          </button>
+        </div>
+
+    </main>
+
+    <script
+      id="fsc-api"
+      src="https://d1f8f9xcsvx3ha.cloudfront.net/sbl/TNP-27957/fastspring-builder.js"
+      type="text/javascript"
+      data-storefront="thoran.test.qa.onfastspring.com/popup-subs"
+      data-data-callback="onFscData"
+    ></script>
+    <script>
+      // There's no data-fsc-item-* directive for the post-trial price - it
+      // only exists in the raw session object as item.future.unitPrice, so
+      // trial pricing has to be rendered by hand from this callback instead
+      // of a simple directive attribute.
+      function onFscData(data) {
+        var items = [];
+        (data.groups || []).forEach(function (group) {
+          items = items.concat(group.items || []);
+        });
+
+        items.forEach(function (item) {
+          var el = document.getElementById("tier-price-" + item.path);
+          if (!el) return;
+
+          var card = document.querySelector('[data-tier-path="' + item.path + '"]');
+          if (card) card.classList.remove("is-loading");
+
+          var now = item.unitPrice;
+          var future = item.future && item.future.unitPrice;
+          var isTrial = future && future !== now;
+
+          if (!isTrial) {
+            el.innerHTML = now + '<span class="unit">/mo</span>';
+            return;
+          }
+
+          var instructions = (item.subscription && item.subscription.instructions) || [];
+          var trial = instructions.filter(function (i) {
+            return i.type === "trial";
+          })[0];
+
+          var trialLabel = "";
+          if (trial) {
+            var n = trial.discountDurationLength;
+            var unit = trial.discountDurationUnit + (n === 1 ? "" : "s");
+            trialLabel = " for " + n + " " + unit;
+          }
+
+          el.innerHTML =
+            now +
+            '<span class="unit">' + trialLabel + "</span>" +
+            '<span class="then">then ' + future + "/mo</span>";
+        });
+      }
+    </script>
+  </body>
+</html>
