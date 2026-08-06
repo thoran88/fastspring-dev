@@ -289,7 +289,7 @@
         </svg>
         All demos
       </a>
-      <span class="env-badge">Sandbox &middot; No real charges</span>
+      <!-- <span class="env-badge">Sandbox &middot; No real charges</span> -->
     </div>
 
     <div class="hero">
@@ -302,7 +302,10 @@
 
     <main>
       <div class="tiers">
-        <div class="tier-card is-live is-loading" data-tier-path="basic-newsletter">
+        <div
+          class="tier-card is-live is-loading"
+          data-tier-path="basic-newsletter"
+        >
           <div class="tier-loading"><div class="tier-spinner"></div></div>
           <span class="tier-badge">Live</span>
           <h2
@@ -323,13 +326,16 @@
           <button
             class="tier-btn"
             data-fsc-item-path-value="basic-newsletter"
-            data-fsc-action="Add, Checkout"
+            data-fsc-action="Reset, Add, Checkout"
           >
             Subscribe
           </button>
         </div>
 
-        <div class="tier-card is-live is-loading" data-tier-path="premium-newsletter">
+        <div
+          class="tier-card is-live is-loading"
+          data-tier-path="premium-newsletter"
+        >
           <div class="tier-loading"><div class="tier-spinner"></div></div>
           <span class="tier-badge">Live</span>
           <h2
@@ -350,13 +356,16 @@
           <button
             class="tier-btn"
             data-fsc-item-path-value="premium-newsletter"
-            data-fsc-action="Add, Checkout"
+            data-fsc-action="Reset, Add, Checkout"
           >
             Subscribe
           </button>
         </div>
 
-        <div class="tier-card is-live is-loading" data-tier-path="ultra-newsletter">
+        <div
+          class="tier-card is-live is-loading"
+          data-tier-path="ultra-newsletter"
+        >
           <div class="tier-loading"><div class="tier-spinner"></div></div>
           <span class="tier-badge">Live</span>
           <h2
@@ -377,7 +386,7 @@
           <button
             class="tier-btn"
             data-fsc-item-path-value="ultra-newsletter"
-            data-fsc-action="Add, Checkout"
+            data-fsc-action="Reset, Add, Checkout"
           >
             Subscribe
           </button>
@@ -407,7 +416,9 @@
           var el = document.getElementById("tier-price-" + item.path);
           if (!el) return;
 
-          var card = document.querySelector('[data-tier-path="' + item.path + '"]');
+          var card = document.querySelector(
+            '[data-tier-path="' + item.path + '"]',
+          );
           if (card) card.classList.remove("is-loading");
 
           var now = item.unitPrice;
@@ -419,7 +430,8 @@
             return;
           }
 
-          var instructions = (item.subscription && item.subscription.instructions) || [];
+          var instructions =
+            (item.subscription && item.subscription.instructions) || [];
           var trial = instructions.filter(function (i) {
             return i.type === "trial";
           })[0];
@@ -433,8 +445,12 @@
 
           el.innerHTML =
             now +
-            '<span class="unit">' + trialLabel + "</span>" +
-            '<span class="then">then ' + future + "/mo</span>";
+            '<span class="unit">' +
+            trialLabel +
+            "</span>" +
+            '<span class="then">then ' +
+            future +
+            "/mo</span>";
         });
       }
     </script>

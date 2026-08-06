@@ -322,7 +322,7 @@
         </svg>
         All demos
       </a>
-      <span class="env-badge">Sandbox &middot; No real charges</span>
+      <!-- <span class="env-badge">Sandbox &middot; No real charges</span> -->
     </div>
 
     <div class="hero">
@@ -432,6 +432,7 @@
       // trial pricing has to be rendered by hand from this callback instead
       // of a simple directive attribute.
       function onFscData(data) {
+      console.log("onFscData", data);
         var items = [];
         (data.groups || []).forEach(function (group) {
           items = items.concat(group.items || []);
