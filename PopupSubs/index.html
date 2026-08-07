@@ -344,7 +344,25 @@
             data-fsc-item-path="basic-newsletter"
             data-fsc-item-display
           ></h2>
-          <div class="tier-price" id="tier-price-basic-newsletter"></div>
+          <div class="tier-price">
+            <span
+              data-fsc-item-path="basic-newsletter"
+              data-fsc-item-price
+            ></span
+            ><span class="unit" id="tier-unit-basic-newsletter">/mo</span>
+            <span
+              class="then"
+              id="tier-then-basic-newsletter"
+              style="display: none"
+            >
+              then
+              <span
+                data-fsc-item-path="basic-newsletter"
+                data-fsc-item-future-price
+              ></span
+              >/mo
+            </span>
+          </div>
           <p
             class="tier-desc"
             data-fsc-item-path="basic-newsletter"
@@ -371,7 +389,25 @@
             data-fsc-item-path="premium-newsletter"
             data-fsc-item-display
           ></h2>
-          <div class="tier-price" id="tier-price-premium-newsletter"></div>
+          <div class="tier-price">
+            <span
+              data-fsc-item-path="premium-newsletter"
+              data-fsc-item-price
+            ></span
+            ><span class="unit" id="tier-unit-premium-newsletter">/mo</span>
+            <span
+              class="then"
+              id="tier-then-premium-newsletter"
+              style="display: none"
+            >
+              then
+              <span
+                data-fsc-item-path="premium-newsletter"
+                data-fsc-item-future-price
+              ></span
+              >/mo
+            </span>
+          </div>
           <p
             class="tier-desc"
             data-fsc-item-path="premium-newsletter"
@@ -398,7 +434,25 @@
             data-fsc-item-path="ultra-newsletter"
             data-fsc-item-display
           ></h2>
-          <div class="tier-price" id="tier-price-ultra-newsletter"></div>
+          <div class="tier-price">
+            <span
+              data-fsc-item-path="ultra-newsletter"
+              data-fsc-item-price
+            ></span
+            ><span class="unit" id="tier-unit-ultra-newsletter">/mo</span>
+            <span
+              class="then"
+              id="tier-then-ultra-newsletter"
+              style="display: none"
+            >
+              then
+              <span
+                data-fsc-item-path="ultra-newsletter"
+                data-fsc-item-future-price
+              ></span
+              >/mo
+            </span>
+          </div>
           <p
             class="tier-desc"
             data-fsc-item-path="ultra-newsletter"
@@ -416,7 +470,7 @@
             Subscribe
           </button>
         </div>
-
+      </div>
     </main>
 
     <script
@@ -427,49 +481,39 @@
       data-data-callback="onFscData"
     ></script>
     <script>
-      // There's no data-fsc-item-* directive for the post-trial price - it
-      // only exists in the raw session object as item.future.unitPrice, so
-      // trial pricing has to be rendered by hand from this callback instead
-      // of a simple directive attribute.
+      // Price numbers (current + future/post-trial) render straight off
+      // data-fsc-item-price / data-fsc-item-future-price directives now -
+      // this callback only handles what still has no directive equivalent:
+      // the trial-duration label text, and toggling the "then $X/mo" line
+      // on for tiers that actually have a trial.
       function onFscData(data) {
-      console.log("onFscData", data);
         var items = [];
         (data.groups || []).forEach(function (group) {
           items = items.concat(group.items || []);
         });
 
         items.forEach(function (item) {
-          var el = document.getElementById("tier-price-" + item.path);
-          if (!el) return;
-
-          var card = document.querySelector('[data-tier-path="' + item.path + '"]');
+          var card = document.querySelector(
+            '[data-tier-path="' + item.path + '"]',
+          );
           if (card) card.classList.remove("is-loading");
 
-          var now = item.unitPrice;
-          var future = item.future && item.future.unitPrice;
-          var isTrial = future && future !== now;
+          var unitEl = document.getElementById("tier-unit-" + item.path);
+          var thenEl = document.getElementById("tier-then-" + item.path);
+          if (!unitEl || !thenEl) return;
 
-          if (!isTrial) {
-            el.innerHTML = now + '<span class="unit">/mo</span>';
-            return;
-          }
-
-          var instructions = (item.subscription && item.subscription.instructions) || [];
+          var instructions =
+            (item.subscription && item.subscription.instructions) || [];
           var trial = instructions.filter(function (i) {
             return i.type === "trial";
           })[0];
 
-          var trialLabel = "";
-          if (trial) {
-            var n = trial.discountDurationLength;
-            var unit = trial.discountDurationUnit + (n === 1 ? "" : "s");
-            trialLabel = " for " + n + " " + unit;
-          }
+          if (!trial) return;
 
-          el.innerHTML =
-            now +
-            '<span class="unit">' + trialLabel + "</span>" +
-            '<span class="then">then ' + future + "/mo</span>";
+          var n = trial.discountDurationLength;
+          var unit = trial.discountDurationUnit + (n === 1 ? "" : "s");
+          unitEl.textContent = " for " + n + " " + unit;
+          thenEl.style.display = "";
         });
       }
     </script>
