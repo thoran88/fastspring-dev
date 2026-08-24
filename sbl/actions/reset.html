@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reset — SBL Actions</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-mark">SBL</span>
+      <span class="brand-name"><a href="../index.html" style="color:inherit;text-decoration:none;">Store Builder Library — Live Actions</a></span>
+    </div>
+    <nav class="topbar-nav">
+      <a href="../index.html">&larr; All actions</a>
+      <span class="prevnext"><a href="replace.html">Replace</a> · Next: <a href="checkout.html">Checkout</a></span>
+    </nav>
+  </div>
+</header>
+
+<div class="shell">
+
+  <section class="card">
+    <div class="entry-head">
+      <span class="entry-name">Reset</span>
+      <span class="badge">data-fsc-action</span>
+    </div>
+    <p class="lede">
+      Clears every product from the cart. No additional attributes required beyond the action itself.
+    </p>
+    <table class="attr-table">
+      <tr><th>Attribute</th><th>Where</th><th>Value</th></tr>
+      <tr><td><code>data-fsc-action</code></td><td>clickable element</td><td><code>"Reset"</code></td></tr>
+    </table>
+  </section>
+
+  <section class="card">
+    <h2>Live demo</h2>
+    <div class="demo-panel">
+      <div class="field-row">
+        <button class="fs-btn secondary" data-fsc-action="Add" data-fsc-item-path-value="prod-1">Add prod-1</button>
+        <button class="fs-btn secondary" data-fsc-action="Add" data-fsc-item-path-value="prod-2">Add prod-2</button>
+      </div>
+      <div class="field-row">
+        <button class="fs-btn" data-fsc-action="Reset">Empty cart</button>
+        <button class="fs-btn secondary" data-fsc-action="ViewCart">View cart</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Source</h2>
+    <pre class="code-block" data-lang="html"><code>&lt;button data-fsc-action="Reset"&gt;
+  Empty cart
+&lt;/button&gt;</code><button class="copy-btn">Copy</button></pre>
+  </section>
+
+  <section class="card">
+    <div class="log-toolbar">
+      <h2>Live event log</h2>
+      <button id="log-clear" class="btn-mini">Clear</button>
+    </div>
+    <div id="live-log"><div class="log-empty">No events yet — add a couple of products, then reset.</div></div>
+  </section>
+
+  <footer class="page-footer">Storefront: thoran.test.qa.onfastspring.com/popup-sbl</footer>
+</div>
+
+<script src="../assets/log.js"></script>
+<script
+  id="fsc-api"
+  src="https://d1f8f9xcsvx3ha.cloudfront.net/sbl/TNP-27957/fastspring-builder.js"
+  type="text/javascript"
+  data-storefront="thoran.test.qa.onfastspring.com/popup-sbl"
+  data-data-callback="dataCallback"
+  data-popup-closed="popupClosed"
+  data-popup-webhook-received="webhookReceived"
+  data-error-callback="errorCallback">
+</script>
+</body>
+</html>

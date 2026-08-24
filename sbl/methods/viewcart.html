@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>viewCart() — SBL Methods</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-mark">SBL</span>
+      <span class="brand-name"><a href="../index.html" style="color:inherit;text-decoration:none;">Store Builder Library — Live Actions</a></span>
+    </div>
+    <nav class="topbar-nav">
+      <a href="../index.html">&larr; All methods</a>
+      <span class="prevnext"><a href="taxid.html">taxId</a> · Next: <a href="callbacks.html">Callbacks</a></span>
+    </nav>
+  </div>
+</header>
+
+<div class="shell">
+
+  <section class="card">
+    <div class="entry-head">
+      <span class="entry-name">viewCart</span>
+      <span class="badge badge-method">fastspring.builder.*</span>
+    </div>
+    <div class="signature">fastspring.builder.viewCart(callback?)</div>
+    <p class="lede">
+      Opens the FastSpring hosted cart popup — the JS equivalent of the
+      <a href="../actions/viewcart.html">ViewCart action</a>.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>Live demo</h2>
+    <div class="demo-panel">
+      <div class="field-row">
+        <button class="fs-btn secondary" id="run-add-1">Add prod-1</button>
+        <button class="fs-btn secondary" id="run-add-2">Add prod-2</button>
+        <button class="fs-btn" id="run-viewcart">Run viewCart()</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Source</h2>
+    <pre class="code-block" data-lang="javascript"><code>fastspring.builder.viewCart();</code><button class="copy-btn">Copy</button></pre>
+  </section>
+
+  <section class="card">
+    <div class="log-toolbar">
+      <h2>Live event log</h2>
+      <button id="log-clear" class="btn-mini">Clear</button>
+    </div>
+    <div id="live-log"><div class="log-empty">No events yet — add a couple of products, then view the cart.</div></div>
+  </section>
+
+  <footer class="page-footer">Storefront: thoran.test.qa.onfastspring.com/popup-sbl</footer>
+</div>
+
+<script src="../assets/log.js"></script>
+<script
+  id="fsc-api"
+  src="https://d1f8f9xcsvx3ha.cloudfront.net/sbl/TNP-27957/fastspring-builder.js"
+  type="text/javascript"
+  data-storefront="thoran.test.qa.onfastspring.com/popup-sbl"
+  data-continuous="true"
+  data-data-callback="dataCallback"
+  data-popup-closed="popupClosed"
+  data-popup-webhook-received="webhookReceived"
+  data-error-callback="errorCallback">
+</script>
+<script>
+  document.getElementById('run-add-1').addEventListener('click', function () {
+    sblLog.run('add("prod-1")', function () { fastspring.builder.add('prod-1'); });
+  });
+  document.getElementById('run-add-2').addEventListener('click', function () {
+    sblLog.run('add("prod-2")', function () { fastspring.builder.add('prod-2'); });
+  });
+  document.getElementById('run-viewcart').addEventListener('click', function () {
+    sblLog.run('viewCart()', function () { fastspring.builder.viewCart(); });
+  });
+</script>
+</body>
+</html>

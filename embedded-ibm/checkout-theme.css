@@ -1,0 +1,37 @@
+/* ============================================================
+   Custom CSS for the embedded-IBM checkout iframe. Deliberately
+   left un-themed - the checkout should look like FastSpring's
+   plain default styling (same as the EmbeddedOnLoad reference,
+   which applies no custom CSS at all). Only structural bugs
+   specific to embedding a popup-designed template inline are
+   fixed here - no colors, fonts, or shapes are touched.
+   ============================================================ */
+
+/* .modal-dialog is FastSpring's shared checkout template wrapper (same
+   class used in popup mode) - common.css gives it padding: 65px 0 60px,
+   which is dead space in embedded mode with no dialog chrome around it. */
+.modal-dialog {
+  padding: 0 !important;
+}
+
+/* Both of these carry popup-only sizing (a fixed max-height + overflow-y:
+   auto so a tall popup scrolls internally within the viewport). That makes
+   no sense embedded inline - our own container already sizes itself via
+   the resizeInlineContainer postMessage - so it's stripped entirely rather
+   than just capped higher, otherwise it'd still clip/scroll on longer
+   content (an added coupon field, a validation error, etc). */
+.modal-dialog,
+.modal-content {
+  max-height: none !important;
+  height: auto !important;
+  overflow: visible !important;
+}
+
+/* Strip FastSpring's default card chrome (border, shadow, rounded corners)
+   so the checkout sits flat on the host page instead of reading as a
+   floating modal/card. */
+.modal-content {
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}

@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>IBM — Enterprise License Checkout</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --ibm-blue: #0f62fe;
+        --ibm-blue-dark: #0043ce;
+        --ibm-black: #161616;
+        --ibm-gray-90: #262626;
+        --ibm-gray-20: #e0e0e0;
+        --ibm-gray-10: #f4f4f4;
+        --white: #ffffff;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--white);
+        color: var(--ibm-black);
+        font-family:
+          "IBM Plex Sans",
+          -apple-system,
+          sans-serif;
+      }
+
+      header {
+        background: var(--ibm-black);
+        color: var(--white);
+        padding: 0 32px;
+        height: 56px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .wordmark {
+        font-weight: 700;
+        font-size: 20px;
+        letter-spacing: 0.02em;
+      }
+
+      .wordmark span {
+        color: var(--ibm-blue);
+      }
+
+      nav {
+        display: flex;
+        gap: 28px;
+        font-size: 14px;
+        color: #c6c6c6;
+      }
+
+      main {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 64px 32px 96px;
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 64px;
+        align-items: start;
+      }
+
+      .eyebrow {
+        text-transform: uppercase;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        color: var(--ibm-blue);
+        margin-bottom: 12px;
+      }
+
+      h1 {
+        font-size: 40px;
+        font-weight: 600;
+        line-height: 1.15;
+        margin: 0 0 20px;
+        letter-spacing: -0.01em;
+      }
+
+      .lede {
+        font-size: 16px;
+        line-height: 1.6;
+        color: var(--ibm-gray-90);
+        margin: 0 0 40px;
+        max-width: 46ch;
+      }
+
+      .feature-list {
+        list-style: none;
+        margin: 0 0 48px;
+        padding: 0;
+        display: grid;
+        gap: 16px;
+      }
+
+      .feature-list li {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        font-size: 14px;
+        color: var(--ibm-gray-90);
+      }
+
+      .feature-list svg {
+        flex-shrink: 0;
+        margin-top: 2px;
+        color: var(--ibm-blue);
+      }
+
+      .payment-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 18px;
+      }
+
+      .payment-head h2 {
+        font-size: 16px;
+        margin: 0;
+        font-weight: 600;
+      }
+
+      .lock-note {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 12px;
+        color: #6f6f6f;
+      }
+
+      .lock-note svg {
+        width: 13px;
+        height: 13px;
+      }
+
+      #fsc-embedded-checkout-container {
+        position: relative;
+        width: 100%;
+        /* The iframe inside is height: 100% of this container, so this
+           floor IS the checkout's rendered height until (if) FastSpring's
+           resizeInlineContainer postMessage arrives and grows it. That
+           message doesn't reliably arrive before paint, so a too-small
+           floor here clips the bottom of the real content (disclosure/
+           logo) - set generously enough to fit the full form including
+           the disclosure by default, not just the fields above the fold. */
+        min-height: 950px;
+        overflow: visible;
+      }
+
+      #custom-spinner {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        padding: 80px 0;
+      }
+
+      #custom-spinner .ring {
+        width: 36px;
+        height: 36px;
+        border: 3px solid var(--ibm-gray-20);
+        border-top-color: var(--ibm-blue);
+        border-radius: 50%;
+        animation: ibm-spin 0.8s linear infinite;
+      }
+
+      #custom-spinner span {
+        font-size: 13px;
+        color: #525252;
+      }
+
+      @keyframes ibm-spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .trust-line {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 16px;
+        font-size: 12px;
+        color: #6f6f6f;
+      }
+
+      footer {
+        border-top: 1px solid var(--ibm-gray-20);
+        padding: 24px 32px;
+        font-size: 12px;
+        color: #6f6f6f;
+        max-width: 1080px;
+        margin: 0 auto;
+      }
+
+      @media (max-width: 760px) {
+        main {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <div class="wordmark">IBM<span>®</span> Software</div>
+      <nav>
+        <span>Products</span>
+        <span>Support</span>
+        <span>Account</span>
+      </nav>
+    </header>
+
+    <main>
+      <div>
+        <p class="eyebrow">Enterprise License</p>
+        <h1>Data Platform Enterprise Edition</h1>
+        <p class="lede">
+          A single, governed data platform for the hybrid enterprise —
+          provisioned in minutes, licensed annually, backed by IBM support.
+        </p>
+
+        <ul class="feature-list">
+          <li>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path
+                d="M13.5 4.5L6 12L2.5 8.5"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            Unlimited users, single organization
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path
+                d="M13.5 4.5L6 12L2.5 8.5"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            24/7 enterprise support and SLA
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path
+                d="M13.5 4.5L6 12L2.5 8.5"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            Annual renewal, cancel anytime
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="payment-head">
+          <h2>Pay with card</h2>
+          <span class="lock-note">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="3" y="11" width="18" height="10" rx="2" />
+              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+            </svg>
+            Encrypted
+          </span>
+        </div>
+        <div id="fsc-embedded-checkout-container">
+          <div id="custom-spinner">
+            <div class="ring"></div>
+            <span>Preparing secure checkout…</span>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      IBM is used here as a styling reference only — this is an internal
+      FastSpring integration demo, not an IBM product.
+    </footer>
+
+    <script
+      id="fsc-api"
+      src="https://d1f8f9xcsvx3ha.cloudfront.net/sbl/TNP-27957/fastspring-builder.js"
+      type="text/javascript"
+      data-storefront="thoran.test.qa2.onfastspring.com/embedded-IBM"
+      data-data-callback="onFscData"
+    ></script>
+    <script>
+      // Waits for SBL's own first session-data event instead of calling
+      // add() immediately - calling it before this fires is what breaks
+      // the data-fsc-item-path directives above (they need a live session
+      // to bind to). For embedded checkouts, add() also auto-launches the
+      // checkout inline by design (see syncInlineSession in the SBL
+      // source) - no explicit checkout() call or button needed.
+      var fscAutoLoaded = false;
+      window.onFscData = function () {
+        if (fscAutoLoaded) return;
+        fscAutoLoaded = true;
+        fastspring.builder.add("prod-1");
+      };
+    </script>
+  </body>
+</html>

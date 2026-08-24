@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>remove() — SBL Methods</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-mark">SBL</span>
+      <span class="brand-name"><a href="../index.html" style="color:inherit;text-decoration:none;">Store Builder Library — Live Actions</a></span>
+    </div>
+    <nav class="topbar-nav">
+      <a href="../index.html">&larr; All methods</a>
+      <span class="prevnext"><a href="recognize-recipients.html">recognizeRecipients</a> · Next: <a href="reset.html">reset</a></span>
+    </nav>
+  </div>
+</header>
+
+<div class="shell">
+
+  <section class="card">
+    <div class="entry-head">
+      <span class="entry-name">remove</span>
+      <span class="badge badge-method">fastspring.builder.*</span>
+    </div>
+    <div class="signature">fastspring.builder.remove(product, callback?)</div>
+    <p class="lede">
+      Removes a product from the cart and resets its quantity back to 1 — the JS equivalent of the
+      <a href="../actions/remove.html">Remove action</a>.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>Live demo</h2>
+    <div class="demo-panel">
+      <div class="field-row">
+        <label for="product-path">Product path:</label>
+        <input type="text" id="product-path" class="fs-input" value="prod-1">
+        <button class="fs-btn secondary" id="run-add">Add first</button>
+        <button class="fs-btn" id="run-remove">Run remove()</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Source</h2>
+    <pre class="code-block" data-lang="javascript"><code>fastspring.builder.remove(document.getElementById('product-path').value);</code><button class="copy-btn">Copy</button></pre>
+  </section>
+
+  <section class="card">
+    <div class="log-toolbar">
+      <h2>Live event log</h2>
+      <button id="log-clear" class="btn-mini">Clear</button>
+    </div>
+    <div id="live-log"><div class="log-empty">No events yet — add, then remove.</div></div>
+  </section>
+
+  <footer class="page-footer">Storefront: thoran.test.qa.onfastspring.com/popup-sbl</footer>
+</div>
+
+<script src="../assets/log.js"></script>
+<script
+  id="fsc-api"
+  src="https://d1f8f9xcsvx3ha.cloudfront.net/sbl/TNP-27957/fastspring-builder.js"
+  type="text/javascript"
+  data-storefront="thoran.test.qa.onfastspring.com/popup-sbl"
+  data-data-callback="dataCallback"
+  data-popup-closed="popupClosed"
+  data-popup-webhook-received="webhookReceived"
+  data-error-callback="errorCallback">
+</script>
+<script>
+  document.getElementById('run-add').addEventListener('click', function () {
+    var path = document.getElementById('product-path').value;
+    sblLog.run('add("' + path + '")', function () { fastspring.builder.add(path); });
+  });
+  document.getElementById('run-remove').addEventListener('click', function () {
+    var path = document.getElementById('product-path').value;
+    sblLog.run('remove("' + path + '")', function () { fastspring.builder.remove(path); });
+  });
+</script>
+</body>
+</html>

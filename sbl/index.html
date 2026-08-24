@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FastSpring SBL — Live Actions &amp; Methods</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-mark">SBL</span>
+      <span class="brand-name">Store Builder Library — Live Actions</span>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+
+  <section class="card">
+    <h1>SBL Actions &amp; Methods, live</h1>
+    <p class="lede">
+      Every <code>data-fsc-action</code> (declarative HTML) and every <code>fastspring.builder.*</code>
+      method (JavaScript) gets its own page, each loading a fresh <code>fastspring-builder.js</code>
+      instance and cart session. That isolation is deliberate — stacking everything on one DOM causes
+      cross-talk (shared session state, click handlers stepping on each other), which is what motivated
+      splitting these out.
+    </p>
+    <p class="lede">
+      Storefront: <code>thoran.test.qa.onfastspring.com/popup-sbl</code> &middot;
+      test products: <code>prod-1</code>, <code>prod-2</code>, <code>prod-3</code>.
+      Every page has a live event log wired to <code>data-data-callback</code>,
+      <code>data-popup-closed</code>, <code>data-popup-webhook-received</code> and
+      <code>data-error-callback</code> so you can see exactly what the builder reports back.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>Actions</h2>
+    <div class="action-grid">
+      <a class="action-card" href="actions/add.html">
+        <span class="entry-name">Add</span>
+        <p>Add a product to the cart without touching quantity.</p>
+      </a>
+      <a class="action-card" href="actions/update.html">
+        <span class="entry-name">Update</span>
+        <p>Change the quantity of a product already in the cart.</p>
+      </a>
+      <a class="action-card" href="actions/remove.html">
+        <span class="entry-name">Remove</span>
+        <p>Remove a product and reset its quantity to 1.</p>
+      </a>
+      <a class="action-card" href="actions/replace.html">
+        <span class="entry-name">Replace</span>
+        <p>Swap one cart item for another — used for upsells.</p>
+      </a>
+      <a class="action-card" href="actions/reset.html">
+        <span class="entry-name">Reset</span>
+        <p>Empty the entire cart.</p>
+      </a>
+      <a class="action-card" href="actions/checkout.html">
+        <span class="entry-name">Checkout</span>
+        <p>Open the hosted FastSpring popup checkout.</p>
+      </a>
+      <a class="action-card" href="actions/paypal-checkout.html">
+        <span class="entry-name">PaypalCheckout</span>
+        <p>Open checkout with PayPal preselected.</p>
+      </a>
+      <a class="action-card" href="actions/promocode.html">
+        <span class="entry-name">Promocode</span>
+        <p>Apply a buyer-entered promo code to the order.</p>
+      </a>
+      <a class="action-card" href="actions/taxid.html">
+        <span class="entry-name">TaxId</span>
+        <p>Apply a VAT/tax-exemption ID to the order.</p>
+      </a>
+      <a class="action-card" href="actions/viewcart.html">
+        <span class="entry-name">ViewCart</span>
+        <p>Open the hosted cart popup.</p>
+      </a>
+      <a class="action-card" href="actions/chained.html">
+        <span class="entry-name">Chained</span>
+        <p>Fire multiple actions from one click, in sequence.</p>
+      </a>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Methods <span style="font-weight:400;color:var(--text-faint);font-size:13px;">fastspring.builder.*</span></h2>
+    <div class="action-grid">
+      <a class="action-card" href="methods/add.html">
+        <span class="entry-name">add</span>
+        <p>Add a product to the cart without touching quantity.</p>
+      </a>
+      <a class="action-card" href="methods/authenticate.html">
+        <span class="entry-name">authenticate</span>
+        <p>Sign a customer into their account portal.</p>
+      </a>
+      <a class="action-card" href="methods/checkout.html">
+        <span class="entry-name">checkout</span>
+        <p>Open the hosted FastSpring popup checkout.</p>
+      </a>
+      <a class="action-card" href="methods/clean.html">
+        <span class="entry-name">clean</span>
+        <p>Reset the cart after a purchase completes.</p>
+      </a>
+      <a class="action-card" href="methods/country.html">
+        <span class="entry-name">country</span>
+        <p>Set the order country (ISO 3166-1 alpha-2).</p>
+      </a>
+      <a class="action-card" href="methods/language.html">
+        <span class="entry-name">language</span>
+        <p>Set the session language (ISO 639-1).</p>
+      </a>
+      <a class="action-card" href="methods/payment.html">
+        <span class="entry-name">payment</span>
+        <p>Preselect a payment method before checkout.</p>
+      </a>
+      <a class="action-card" href="methods/postal-code.html">
+        <span class="entry-name">postalCode</span>
+        <p>Apply a postal code for tax and localization.</p>
+      </a>
+      <a class="action-card" href="methods/promo.html">
+        <span class="entry-name">promo</span>
+        <p>Apply a promo code to the order.</p>
+      </a>
+      <a class="action-card" href="methods/push.html">
+        <span class="entry-name">push</span>
+        <p>Push a full session object in one call.</p>
+      </a>
+      <a class="action-card" href="methods/recognize.html">
+        <span class="entry-name">recognize</span>
+        <p>Prefill unauthenticated customer info.</p>
+      </a>
+      <a class="action-card" href="methods/recognize-recipients.html">
+        <span class="entry-name">recognizeRecipients</span>
+        <p>Prefill gift recipient info for the gift flow.</p>
+      </a>
+      <a class="action-card" href="methods/remove.html">
+        <span class="entry-name">remove</span>
+        <p>Remove a product and reset its quantity to 1.</p>
+      </a>
+      <a class="action-card" href="methods/reset.html">
+        <span class="entry-name">reset</span>
+        <p>Clear every product from the cart.</p>
+      </a>
+      <a class="action-card" href="methods/secure.html">
+        <span class="entry-name">secure</span>
+        <p>Pass locked contact/item/pricing data.</p>
+      </a>
+      <a class="action-card" href="methods/tag.html">
+        <span class="entry-name">tag</span>
+        <p>Attach custom order-level key/value tags.</p>
+      </a>
+      <a class="action-card" href="methods/taxid.html">
+        <span class="entry-name">taxId</span>
+        <p>Apply a VAT exemption tax ID to the order.</p>
+      </a>
+      <a class="action-card" href="methods/update.html">
+        <span class="entry-name">update</span>
+        <p>Change the quantity of a product in the cart.</p>
+      </a>
+      <a class="action-card" href="methods/viewcart.html">
+        <span class="entry-name">viewCart</span>
+        <p>Open the hosted cart popup.</p>
+      </a>
+      <a class="action-card" href="methods/callbacks.html">
+        <span class="entry-name">Callbacks</span>
+        <p>Global data/popup/error callbacks + per-method callbacks.</p>
+      </a>
+    </div>
+  </section>
+
+  <footer class="page-footer">
+    Live demos hitting a real FastSpring test storefront — verify behavior against the
+    <a href="https://developer.fastspring.com/reference/actions" target="_blank" rel="noopener">official actions docs</a>.
+  </footer>
+
+</div>
+</body>
+</html>

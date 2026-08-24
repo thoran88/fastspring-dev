@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>language() — SBL Methods</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-mark">SBL</span>
+      <span class="brand-name"><a href="../index.html" style="color:inherit;text-decoration:none;">Store Builder Library — Live Actions</a></span>
+    </div>
+    <nav class="topbar-nav">
+      <a href="../index.html">&larr; All methods</a>
+      <span class="prevnext"><a href="country.html">country</a> · Next: <a href="payment.html">payment</a></span>
+    </nav>
+  </div>
+</header>
+
+<div class="shell">
+
+  <section class="card">
+    <div class="entry-head">
+      <span class="entry-name">language</span>
+      <span class="badge badge-method">fastspring.builder.*</span>
+    </div>
+    <div class="signature">fastspring.builder.language(languageCode)</div>
+    <p class="lede">
+      Sets the session language using an ISO 639-1 code (e.g. <code>en</code>, <code>de</code>,
+      <code>fr</code>). Affects the language of the popup checkout UI.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>Live demo</h2>
+    <div class="demo-panel">
+      <div class="field-row">
+        <label for="lang-code">Language code:</label>
+        <select id="lang-code" class="fs-select">
+          <option value="en">en — English</option>
+          <option value="de">de — German</option>
+          <option value="fr">fr — French</option>
+          <option value="es">es — Spanish</option>
+          <option value="ja">ja — Japanese</option>
+        </select>
+        <button class="fs-btn" id="run-language">Run language()</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Source</h2>
+    <pre class="code-block" data-lang="javascript"><code>fastspring.builder.language(document.getElementById('lang-code').value);</code><button class="copy-btn">Copy</button></pre>
+  </section>
+
+  <section class="card">
+    <div class="log-toolbar">
+      <h2>Live event log</h2>
+      <button id="log-clear" class="btn-mini">Clear</button>
+    </div>
+    <div id="live-log"><div class="log-empty">No events yet — pick a language and run.</div></div>
+  </section>
+
+  <footer class="page-footer">Storefront: thoran.test.qa.onfastspring.com/popup-sbl</footer>
+</div>
+
+<script src="../assets/log.js"></script>
+<script
+  id="fsc-api"
+  src="https://d1f8f9xcsvx3ha.cloudfront.net/sbl/TNP-27957/fastspring-builder.js"
+  type="text/javascript"
+  data-storefront="thoran.test.qa.onfastspring.com/popup-sbl"
+  data-data-callback="dataCallback"
+  data-popup-closed="popupClosed"
+  data-popup-webhook-received="webhookReceived"
+  data-error-callback="errorCallback">
+</script>
+<script>
+  document.getElementById('run-language').addEventListener('click', function () {
+    var code = document.getElementById('lang-code').value;
+    sblLog.run('language("' + code + '")', function () { fastspring.builder.language(code); });
+  });
+</script>
+</body>
+</html>

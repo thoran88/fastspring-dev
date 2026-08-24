@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>recognize() — SBL Methods</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-mark">SBL</span>
+      <span class="brand-name"><a href="../index.html" style="color:inherit;text-decoration:none;">Store Builder Library — Live Actions</a></span>
+    </div>
+    <nav class="topbar-nav">
+      <a href="../index.html">&larr; All methods</a>
+      <span class="prevnext"><a href="push.html">push</a> · Next: <a href="recognize-recipients.html">recognizeRecipients</a></span>
+    </nav>
+  </div>
+</header>
+
+<div class="shell">
+
+  <section class="card">
+    <div class="entry-head">
+      <span class="entry-name">recognize</span>
+      <span class="badge badge-method">fastspring.builder.*</span>
+    </div>
+    <div class="signature">fastspring.builder.recognize(payload, secureKey?)</div>
+    <p class="lede">
+      Prefills unauthenticated customer information (email, name) into the checkout session.
+    </p>
+    <div class="entry-notes">
+      <strong>Note:</strong> this stores data in the browser session — the values won't appear in the
+      builder's own data object, but they will prefill the checkout form when it opens.
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Live demo</h2>
+    <div class="demo-panel">
+      <div class="field-row">
+        <button class="fs-btn secondary" id="run-add">1. Add prod-1</button>
+      </div>
+      <div class="field-row">
+        <label for="rec-email">Email:</label>
+        <input type="email" id="rec-email" class="fs-input" value="buyer@example.com">
+      </div>
+      <div class="field-row">
+        <label for="rec-first">First name:</label>
+        <input type="text" id="rec-first" class="fs-input" value="Jane">
+        <label for="rec-last">Last name:</label>
+        <input type="text" id="rec-last" class="fs-input" value="Doe">
+      </div>
+      <div class="field-row">
+        <button class="fs-btn secondary" id="run-recognize">2. Run recognize()</button>
+        <button class="fs-btn" id="run-checkout">3. Checkout — see it prefilled</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Source</h2>
+    <pre class="code-block" data-lang="javascript"><code>fastspring.builder.recognize({
+  email: document.getElementById('rec-email').value,
+  firstName: document.getElementById('rec-first').value,
+  lastName: document.getElementById('rec-last').value
+});
+fastspring.builder.checkout();</code><button class="copy-btn">Copy</button></pre>
+  </section>
+
+  <section class="card">
+    <div class="log-toolbar">
+      <h2>Live event log</h2>
+      <button id="log-clear" class="btn-mini">Clear</button>
+    </div>
+    <div id="live-log"><div class="log-empty">No events yet — add, recognize, then check out.</div></div>
+  </section>
+
+  <footer class="page-footer">Storefront: thoran.test.qa.onfastspring.com/popup-sbl</footer>
+</div>
+
+<script src="../assets/log.js"></script>
+<script
+  id="fsc-api"
+  src="https://d1f8f9xcsvx3ha.cloudfront.net/sbl/TNP-27957/fastspring-builder.js"
+  type="text/javascript"
+  data-storefront="thoran.test.qa.onfastspring.com/popup-sbl"
+  data-data-callback="dataCallback"
+  data-popup-closed="popupClosed"
+  data-popup-webhook-received="webhookReceived"
+  data-error-callback="errorCallback">
+</script>
+<script>
+  document.getElementById('run-add').addEventListener('click', function () {
+    sblLog.run('add("prod-1")', function () { fastspring.builder.add('prod-1'); });
+  });
+  document.getElementById('run-recognize').addEventListener('click', function () {
+    sblLog.run('recognize(...)', function () {
+      fastspring.builder.recognize({
+        email: document.getElementById('rec-email').value,
+        firstName: document.getElementById('rec-first').value,
+        lastName: document.getElementById('rec-last').value
+      });
+    });
+  });
+  document.getElementById('run-checkout').addEventListener('click', function () {
+    sblLog.run('checkout()', function () { fastspring.builder.checkout(); });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>push() — SBL Methods</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-mark">SBL</span>
+      <span class="brand-name"><a href="../index.html" style="color:inherit;text-decoration:none;">Store Builder Library — Live Actions</a></span>
+    </div>
+    <nav class="topbar-nav">
+      <a href="../index.html">&larr; All methods</a>
+      <span class="prevnext"><a href="promo.html">promo</a> · Next: <a href="recognize.html">recognize</a></span>
+    </nav>
+  </div>
+</header>
+
+<div class="shell">
+
+  <section class="card">
+    <div class="entry-head">
+      <span class="entry-name">push</span>
+      <span class="badge badge-method">fastspring.builder.*</span>
+    </div>
+    <div class="signature">fastspring.builder.push(sessionObject)</div>
+    <p class="lede">
+      Pushes a full session object to FastSpring in one call — products, contact info, language, and a
+      <code>reset</code> flag — instead of chaining several single-purpose methods. Useful for restoring
+      a saved cart or setting up a session in bulk from server-rendered data.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>Live demo</h2>
+    <p class="lede">Edit the JSON below, then push it.</p>
+    <div class="demo-panel">
+      <div class="field-row" style="display:block;">
+        <textarea id="push-json" class="fs-textarea">{
+  "reset": true,
+  "products": [
+    { "path": "prod-1", "quantity": 2 }
+  ],
+  "paymentContact": {
+    "email": "buyer@example.com",
+    "firstName": "Jane",
+    "lastName": "Doe"
+  },
+  "language": "en"
+}</textarea>
+      </div>
+      <div class="field-row">
+        <button class="fs-btn" id="run-push">Run push()</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Source</h2>
+    <pre class="code-block" data-lang="javascript"><code>var session = JSON.parse(document.getElementById('push-json').value);
+fastspring.builder.push(session);</code><button class="copy-btn">Copy</button></pre>
+  </section>
+
+  <section class="card">
+    <div class="log-toolbar">
+      <h2>Live event log</h2>
+      <button id="log-clear" class="btn-mini">Clear</button>
+    </div>
+    <div id="live-log"><div class="log-empty">No events yet — edit the JSON and push it.</div></div>
+  </section>
+
+  <footer class="page-footer">Storefront: thoran.test.qa.onfastspring.com/popup-sbl</footer>
+</div>
+
+<script src="../assets/log.js"></script>
+<script
+  id="fsc-api"
+  src="https://d1f8f9xcsvx3ha.cloudfront.net/sbl/TNP-27957/fastspring-builder.js"
+  type="text/javascript"
+  data-storefront="thoran.test.qa.onfastspring.com/popup-sbl"
+  data-data-callback="dataCallback"
+  data-popup-closed="popupClosed"
+  data-popup-webhook-received="webhookReceived"
+  data-error-callback="errorCallback">
+</script>
+<script>
+  document.getElementById('run-push').addEventListener('click', function () {
+    sblLog.run('push(...)', function () {
+      var session = JSON.parse(document.getElementById('push-json').value);
+      fastspring.builder.push(session);
+    });
+  });
+</script>
+</body>
+</html>
