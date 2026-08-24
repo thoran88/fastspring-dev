@@ -12,6 +12,12 @@
       "runtimeExecutable": "bash",
       "runtimeArgs": ["-c", "cd /Users/thoran/fastspring-api-dev && exec node server.js"],
       "port": 3000
+    },
+    {
+      "name": "react-checkout",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "/Users/thoran/dev/ReactCheckout", "run", "dev", "--", "--port", "5173", "--strictPort"],
+      "port": 5173
     }
   ]
 }
