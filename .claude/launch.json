@@ -14,10 +14,10 @@
       "port": 3000
     },
     {
-      "name": "react-checkout",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["--prefix", "/Users/thoran/dev/ReactCheckout", "run", "dev", "--", "--port", "5173", "--strictPort"],
-      "port": 5173
+      "name": "b2b-demo",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8134", "--directory", "/private/tmp/claude-502/-Users-thoran-dev/458a7cfd-db07-4ef9-a0a9-bd3ef2bbf645/scratchpad"],
+      "port": 8134
     }
   ]
 }

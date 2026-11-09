@@ -4,11 +4,82 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Popup CSS Checkout</title>
+    <style>
+      /* A little decoration so the page isn't a bare button. Same palette as
+         pokemon.css, which styles the checkout popup itself. */
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        font-family: "Nunito", -apple-system, "Helvetica Neue", Arial, sans-serif;
+        color: #1b2735;
+        background:
+          radial-gradient(circle at 15% 20%, rgba(255, 203, 5, 0.35), transparent 40%),
+          radial-gradient(circle at 85% 85%, rgba(42, 117, 187, 0.3), transparent 45%),
+          #f4f8ff;
+      }
+
+      .demo {
+        width: min(380px, calc(100vw - 32px));
+        padding: 34px 28px 28px;
+        text-align: center;
+        background: #fff;
+        border: 4px solid #2a75bb;
+        border-radius: 28px;
+        box-shadow:
+          0 0 0 4px #ffcb05,
+          8px 8px 0 rgba(27, 39, 53, 0.14);
+      }
+
+      .demo h1 {
+        margin: 0 0 6px;
+        font-size: 1.5rem;
+        font-weight: 800;
+      }
+
+      .demo p {
+        margin: 0 0 24px;
+        color: #5b6b7d;
+        font-size: 0.95rem;
+      }
+
+      .demo button {
+        padding: 12px 28px;
+        font: inherit;
+        font-weight: 800;
+        color: #1b2735;
+        background: #ffcb05;
+        border: 3px solid #2a75bb;
+        border-radius: 999px;
+        cursor: pointer;
+        box-shadow: 0 4px 0 #1c4f80;
+        transition:
+          transform 0.1s ease,
+          box-shadow 0.1s ease;
+      }
+
+      .demo button:hover {
+        background: #ffd633;
+      }
+
+      .demo button:active {
+        transform: translateY(3px);
+        box-shadow: 0 1px 0 #1c4f80;
+      }
+    </style>
   </head>
   <body>
-    <button data-fsc-item-path-value="prod-1" data-fsc-action="Reset, Add, Checkout">
-      Buy prod-1
-    </button>
+    <main class="demo">
+      <h1>Custom CSS checkout</h1>
+      <p>Opens the popup with the custom theme applied.</p>
+      <button
+        data-fsc-item-path-value="prod-1"
+        data-fsc-action="Reset, Add, Checkout"
+      >
+        Buy prod-1
+      </button>
+    </main>
 
     <script
       id="fsc-api"
@@ -16,5 +87,6 @@
       type="text/javascript"
       data-storefront="thoran.test.qa2.onfastspring.com/popup-css"
     ></script>
+    <script src="../shared/test-card.js" defer></script>
   </body>
 </html>

@@ -118,9 +118,16 @@ fetch('http://localhost:8124/sign', {
       "quantity": 1,
       "pricing": {
         "price": { "USD": 19.00 }
-      }
+      },
+      "display": { "en": "Perpetual License (maintenance until 2027-09-04)" },
+      "description": {
+        "summary": "Maintenance until 2027-09-04",
+        "full": "<p>Perpetual license - maintenance included until 2027-09-04.</p>"
+      },
+      "attributes": { "maintenanceUntil": "2027-09-04" }
     }
-  ]
+  ],
+  "tags": { "test": "sbl-description-invoice-check-v2" }
 }</textarea
             >
           </div>
@@ -229,5 +236,6 @@ fetch('http://localhost:8124/sign', {
           );
         });
     </script>
+      <script src="../../shared/test-card.js" defer></script>
   </body>
 </html>
