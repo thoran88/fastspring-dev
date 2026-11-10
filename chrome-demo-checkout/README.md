@@ -12,8 +12,8 @@ directly on a seller's real website instead of a mockup.
 
 ## Configure
 
-Edit [`config.js`](config.js) — `storefront`, `buildId`, and `productPath` — to point at a real
-demo store/product instead of the QA test store it ships with.
+Edit [`config.js`](config.js) — `storefront` and `productPath` — to point at a real
+demo store/product instead of the test store it ships with.
 
 ## How it works
 

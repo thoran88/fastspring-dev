@@ -18,8 +18,8 @@ Each demo page is self-contained and points at its own FastSpring Checkout:
 
 | Demo              | Checkout                                              |
 | ----------------- | ----------------------------------------------------- |
-| Embedded Checkout | `thoran.test.qa.onfastspring.com/embedded-cards`      |
-| Popup Checkout    | `thoran.test.qa.onfastspring.com/popup-rocket-league` |
-| Web Checkout      | `thoran.test.qa.onfastspring.com/license`             |
+| Embedded Checkout | `tariqh.test.onfastspring.com/embedded-cards`         |
+| Popup Checkout    | `tariqh.test.onfastspring.com/popup-rocket-league1`   |
+| Web Checkout      | `tariqh.test.onfastspring.com/licence`                |
 
 All three point at the sandbox (test) store — no real charges occur.

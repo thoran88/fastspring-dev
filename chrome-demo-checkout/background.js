@@ -92,7 +92,7 @@ function tryOpenCheckout(config) {
     const script = document.createElement('script');
     script.id = SCRIPT_ID;
     script.type = 'text/javascript';
-    script.src = `https://d1f8f9xcsvx3ha.cloudfront.net/sbl/${config.buildId}/fastspring-builder.js`;
+    script.src = 'https://sbl.onfastspring.com/sbl/1.0.9/fastspring-builder.min.js';
     script.setAttribute('data-storefront', config.storefront);
     script.addEventListener('load', () => { runCheckout(); resolve('ok'); }, { once: true });
     script.addEventListener('error', () => resolve('blocked'), { once: true });
